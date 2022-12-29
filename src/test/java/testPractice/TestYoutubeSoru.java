@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
 
-public class Q01SoruYoutube {
+public class TestYoutubeSoru {
 
    @Test
   public void kullaniciGiris() throws InterruptedException {
@@ -21,33 +21,28 @@ public class Q01SoruYoutube {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 
-        Thread.sleep(200);
-        driver.get("https://www.youtube.com/");
 
-        Thread.sleep(200);
+        driver.get("https://youtube.com");
 
        // Kullanici girisi;
        driver.findElement(By.xpath("//ytd-button-renderer[@id='sign-in-button']")).click();
 
-       Thread.sleep(200);
        //input[@type='email']
        driver.findElement(By.xpath("//input[@type='email']")).click();
 
-       Thread.sleep(200);
        //input[@id='identifierId']
-       driver.findElement(By.id("identifierId")).sendKeys(""+ Keys.ENTER);
+       driver.findElement(By.id("identifierId")).sendKeys("o***@gmail.com"+ Keys.ENTER);
 
+       driver.findElement(By.xpath("//input[@type='password']")).click();
 
-       Thread.sleep(200);
-       driver.findElement(By.xpath("//input[@type='password']")).sendKeys(""+Keys.ENTER);
+       driver.findElement(By.id("password")).sendKeys("******"+Keys.ENTER);
 
-       //Thread.sleep(200);
-      // driver.findElement(By.xpath("//input[@id='search']")).click();
+       driver.findElement(By.xpath("//input[@id='search']")).click();
        //driver.findElement(By.id("search")).sendKeys("ahmet bulutluoz"+Keys.ENTER);
-       driver.findElement(By.xpath("//button[@id='search-icon-legacy']")).sendKeys("scs"+Keys.ENTER);
+       driver.findElement(By.xpath("//button[@id='search-icon-legacy']")).sendKeys("ahmet bulutluoz"+Keys.ENTER);
 
-       Thread.sleep(200);
-       //driver.findElement(By.xpath("//div[@id='avatar']")).click();
+
+       driver.findElement(By.xpath("//div[@id='avatar']")).click();
 
        Thread.sleep(200);
        //ytd-subscribe-button-renderer[@class='style-scope ytd-c4-tabbed-header-renderer']
