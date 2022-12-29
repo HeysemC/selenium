@@ -11,12 +11,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
+import java.util.Set;
 
 public class TestEbayMacBookProSatinAlma {
 
 
     @Test
-    public void testEbayMacBookProSatinAlma(){
+    public void testEbayMacBookProSatinAlma() throws InterruptedException {
 
 
 
@@ -44,18 +45,43 @@ public class TestEbayMacBookProSatinAlma {
         System.out.println(bulunanSonuc.getText());
 
 
-        //5-2020 model ve ustunu getir
+        //5-marka kısmından apple sec
+        WebElement siteKlavuzu = driver.findElement(By.xpath("//div[@class='overlay']"));
+        siteKlavuzu.click();
+        WebElement markaSecimi = driver.findElement(By.xpath("//a[@href='/sr?wb=101470&q=macbook pro m2&qt=MacBook pro m2&st=MacBook pro m2&os=1']"));
+        markaSecimi.click();
+
+        //6-Sonuclari pahalidan ucuza dogru sirala
+        WebElement siralama=driver.findElement(By.xpath("//option[@value='PRICE_BY_DESC']"));
+        siralama.click();
+        String ilkSayfaWHD= driver.getWindowHandle();
 
 
-
-        //6-Sonuclari ucuzdan pahaliya dogru sirala
-        driver.findElement(By.xpath("//option[@value='PRICE_BY_DESC']")).click();
-
-
-        //7-Cikan sonuclardan ilkini sepete ekle
+        //7-Cikan sonuclardan ilkini sec ve sepete ekle test et
         driver.findElement(By.xpath("//div[@data-id='265756770']")).click();
-        driver.findElement(By.xpath("//button[@class='add-to-basket']")).click();
+        Set<String> ikinciSayfaninWHDegerleriSeti=driver.getWindowHandles();
+        String ikinciSayfaWHD="";
 
+        for (String eachWHD:ikinciSayfaninWHDegerleriSeti
+        ) {
+            if (!eachWHD.equals(ilkSayfaWHD)) {
+                ikinciSayfaWHD = eachWHD;
+            }
+        }
+
+        driver.switchTo().window(ikinciSayfaWHD);
+        WebElement sepeteEkle =driver.findElement(By.xpath("//div[@class='add-to-basket-button-text']"));
+        WebElement sepeteEklendi= driver.findElement(By.xpath("//div[@class='add-to-basket-button-text-success']"));
+        sepeteEkle.click();
+        sepeteEklendi.getText();
+        if (sepeteEklendi.getText().equals("Sepete Eklendi")){
+            System.out.println("\nSepete ekleme testi basarili");
+
+        }else System.out.println("\nSepete ekleme testi basarisiz");
+
+
+
+        Thread.sleep(2000);
 
 
 
